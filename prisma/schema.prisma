@@ -11,15 +11,12 @@ datasource db {
 }
 
 model Image {
-  userId String @unique
   imageId String @id @map("_id")
+  userId String @unique
   takenDate DateTime 
-  uploader Uploader? @relation(fields: [userId], references: [username])
+  username String
+  realName String?
+
 }
 
-model Uploader {
-  username String @id @map("_id")
-  realName String?
-  images Image?
-}
 
