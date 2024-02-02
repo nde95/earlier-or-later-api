@@ -8,7 +8,6 @@ const prisma = new PrismaClient();
 
 export async function fetchAndStorePhotos(): Promise<void> {
   try {
-    // Fetch photos from Flickr API
     const searchResponse = await axios.get(
       "https://api.flickr.com/services/rest/",
       {
@@ -21,17 +20,13 @@ export async function fetchAndStorePhotos(): Promise<void> {
         },
       }
     );
-
-    console.log("API Key:", process.env.FLICKR_KEY);
-
     console.log("Search response:", searchResponse.data);
 
-    // Process each photo
     const photos = searchResponse.data.photos.photo;
-    console.log("Photos array:", photos); // Check the structure of photos array
+    console.log("Photos array:", photos);
 
     for (const photo of photos) {
-      // Get detailed information for each photo
+      // Get date information and username/title/realname if they all exist from API call using info from first call
       const infoResponse = await axios.get(
         "https://api.flickr.com/services/rest/",
         {
@@ -45,18 +40,18 @@ export async function fetchAndStorePhotos(): Promise<void> {
         }
       );
 
-      // Extract uploader information and taken date
       const uploader = infoResponse.data.photo.owner.username;
       const uploaderName = infoResponse.data.photo.owner.realname;
       const takenDate = infoResponse.data.photo.dates.taken;
 
-      // Store photo data in your database using Prisma
+      // Store info in db schema
       await prisma.image.create({
         data: {
           userId: photo.owner,
           imageId: photo.id,
           username: uploader,
           realName: uploaderName,
+          title: photo.title,
           takenDate: new Date(takenDate),
         },
       });

@@ -16,7 +16,6 @@ model Image {
   takenDate DateTime 
   username String
   realName String?
-
+  title String?
 }
-
 
