@@ -9,3 +9,18 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Image {
+  id Int @id @map("_id")
+  userId String @unique
+  imageId String
+  takenDate DateTime 
+  uploader Uploader? @relation(fields: [userId], references: [username])
+}
+
+model Uploader {
+  username String @id @map("_id")
+  realName String?
+  images Image?
+}
+
