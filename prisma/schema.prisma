@@ -11,9 +11,8 @@ datasource db {
 }
 
 model Image {
-  id Int @id @map("_id")
   userId String @unique
-  imageId String
+  imageId String @id @map("_id")
   takenDate DateTime 
   uploader Uploader? @relation(fields: [userId], references: [username])
 }
