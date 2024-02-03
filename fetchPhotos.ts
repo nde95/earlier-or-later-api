@@ -47,6 +47,7 @@ export async function fetchAndStorePhotos(): Promise<void> {
       const takenDate = infoResponse.data.photo.dates.taken;
       const format = infoResponse.data.photo.originalformat;
       const picSecret = infoResponse.data.photo.secret;
+      const serverId = infoResponse.data.photo.server;
       const url = infoResponse.data.photo.urls.url[0]._content;
       const linktype = infoResponse.data.photo.urls.url[0].type;
 
@@ -63,6 +64,7 @@ export async function fetchAndStorePhotos(): Promise<void> {
           picSecret: picSecret,
           url: url,
           pageType: linktype,
+          serverId: serverId,
         },
       });
     }
@@ -72,3 +74,5 @@ export async function fetchAndStorePhotos(): Promise<void> {
     console.error("Error fetching and storing photos:", error);
   }
 }
+
+// https://live.staticflickr.com/{server-id}/{id}_{secret}_b.jpg

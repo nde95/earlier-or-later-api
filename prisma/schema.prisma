@@ -21,5 +21,6 @@ model Image {
   picSecret String
   url String
   pageType String
+  serverId String
 }
 
