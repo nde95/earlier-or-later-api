@@ -17,5 +17,9 @@ model Image {
   username String
   realName String?
   title String?
+  format String?
+  picSecret String
+  url String
+  pageType String
 }
 

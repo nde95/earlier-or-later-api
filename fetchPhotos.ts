@@ -17,6 +17,8 @@ export async function fetchAndStorePhotos(): Promise<void> {
           tags: "people",
           format: "json",
           nojsoncallback: 1,
+          page: 1,
+          per_page: 10,
         },
       }
     );
@@ -43,6 +45,10 @@ export async function fetchAndStorePhotos(): Promise<void> {
       const uploader = infoResponse.data.photo.owner.username;
       const uploaderName = infoResponse.data.photo.owner.realname;
       const takenDate = infoResponse.data.photo.dates.taken;
+      const format = infoResponse.data.photo.originalformat;
+      const picSecret = infoResponse.data.photo.secret;
+      const url = infoResponse.data.photo.urls.url[0]._content;
+      const linktype = infoResponse.data.photo.urls.url[0].type;
 
       // Store info in db schema
       await prisma.image.create({
@@ -53,6 +59,10 @@ export async function fetchAndStorePhotos(): Promise<void> {
           realName: uploaderName,
           title: photo.title,
           takenDate: new Date(takenDate),
+          format: format,
+          picSecret: picSecret,
+          url: url,
+          pageType: linktype,
         },
       });
     }
