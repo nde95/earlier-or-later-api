@@ -1,3 +1,4 @@
+import prisma from "./libs/prismadb";
 import { fetchAndStorePhotos } from "./fetchPhotos";
 import "dotenv/config";
 const express = require("express");
@@ -10,12 +11,23 @@ app.get("/", (req: any, res: any) => {
   res.send("live and working");
 });
 
-app.get("/getphotos", async (req: any, res: any) => {
+app.get("/fetchphotos", async (req: any, res: any) => {
   try {
     await fetchAndStorePhotos();
     res.send("Photos fetched and stored successfully.");
   } catch (error) {
     console.error("Error fetching and storing photos:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/getphotos", async (req: any, res: any) => {
+  try {
+    await prisma.image.findMany().then(photos => {
+      res.send(photos);
+    });
+  } catch (error) {
+    console.error("Error fetching photos:", error);
     res.status(500).send("Internal Server Error");
   }
 });

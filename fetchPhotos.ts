@@ -14,7 +14,7 @@ export async function fetchAndStorePhotos(): Promise<void> {
         params: {
           method: "flickr.photos.search",
           api_key: process.env.FLICKR_KEY,
-          tags: "people",
+          tags: "parade",
           format: "json",
           nojsoncallback: 1,
           page: 1,
