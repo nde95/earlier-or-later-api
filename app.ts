@@ -29,7 +29,7 @@ app.get("/getphotos", async (req: any, res: any) => {
   try {
     await prisma.image.findMany().then(photos => {
       photos.sort(() => Math.random() - 0.5);
-      res.send(photos);
+      res.status(200).send(photos);
       console.log("Photos fetched successfully.");
     });
   } catch (error) {
