@@ -5,6 +5,10 @@ const express = require("express");
 const app = express();
 const port = 3001;
 
+var cors = require("cors");
+
+app.use(cors());
+
 require("dotenv").config({ path: "./.env" });
 
 app.get("/", (req: any, res: any) => {
@@ -25,6 +29,7 @@ app.get("/getphotos", async (req: any, res: any) => {
   try {
     await prisma.image.findMany().then(photos => {
       res.send(photos);
+      console.log("Photos fetched successfully.");
     });
   } catch (error) {
     console.error("Error fetching photos:", error);
