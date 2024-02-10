@@ -28,6 +28,7 @@ app.get("/fetchphotos", async (req: any, res: any) => {
 app.get("/getphotos", async (req: any, res: any) => {
   try {
     await prisma.image.findMany().then(photos => {
+      photos.sort(() => Math.random() - 0.5);
       res.send(photos);
       console.log("Photos fetched successfully.");
     });
