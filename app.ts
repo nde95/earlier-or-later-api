@@ -1,6 +1,7 @@
 import prisma from "./libs/prismadb";
 import { fetchAndStorePhotos } from "./fetchPhotos";
 import "dotenv/config";
+import { getRandomPhotos } from "./getRandomPhotos";
 const express = require("express");
 const app = express();
 const port = 3001;
@@ -27,10 +28,21 @@ app.get("/fetchphotos", async (req: any, res: any) => {
 
 app.get("/getphotos", async (req: any, res: any) => {
   try {
-    await prisma.image.findMany().then(photos => {
+    await prisma.image.findMany({ take: 20 }).then(photos => {
       photos.sort(() => Math.random() - 0.5);
       res.status(200).send(photos);
       console.log("Photos fetched successfully.");
+    });
+  } catch (error) {
+    console.error("Error fetching photos:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.get("/getrandomphotos", async (req: any, res: any) => {
+  try {
+    await getRandomPhotos().then(photos => {
+      res.send(photos);
     });
   } catch (error) {
     console.error("Error fetching photos:", error);
