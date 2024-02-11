@@ -25,9 +25,8 @@ export async function getRandomPhotos() {
     const collection = database.collection("Image");
 
     const randomImages = await collection
-      .aggregate([{ $sample: { size: 10 } }])
+      .aggregate([{ $sample: { size: 20 } }])
       .toArray();
-    console.log("Random images:", randomImages);
     return randomImages;
   } catch (error) {
     console.error("Error fetching photos:", error);

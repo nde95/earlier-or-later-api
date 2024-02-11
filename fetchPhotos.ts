@@ -12,13 +12,15 @@ export async function fetchAndStorePhotos(): Promise<void> {
       "https://api.flickr.com/services/rest/",
       {
         params: {
-          method: "flickr.photos.search",
+          method: "flickr.groups.pools.getPhotos",
           api_key: process.env.FLICKR_KEY,
-          tags: "parade",
+          group_id: "571091@N20",
+          tags: "",
+          max_taken_date: "1990-12-31",
           format: "json",
           nojsoncallback: 1,
           page: 1,
-          per_page: 10,
+          per_page: 15,
         },
       }
     );
