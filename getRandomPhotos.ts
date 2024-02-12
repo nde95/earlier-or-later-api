@@ -19,6 +19,7 @@ const client = new MongoClient(uri, {
 });
 
 export async function getRandomPhotos() {
+  let count = 0;
   try {
     await client.connect();
     const database = client.db("test");
@@ -27,6 +28,11 @@ export async function getRandomPhotos() {
     const randomImages = await collection
       .aggregate([{ $sample: { size: 20 } }])
       .toArray();
+
+    randomImages.forEach((image: any) => {
+      count++;
+      console.log(`Image ${count}: ${image.title}`);
+    });
     return randomImages;
   } catch (error) {
     console.error("Error fetching photos:", error);
