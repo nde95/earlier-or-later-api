@@ -24,3 +24,12 @@ model Image {
   serverId String
 }
 
+model RegisteredUser {
+  userId String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  email String @unique
+  hashedPassword String
+  highScore Int?
+}
+
+
