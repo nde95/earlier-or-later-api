@@ -79,9 +79,10 @@ app.post("/register", async (req: any, res: any) => {
 
 app.post("/login", async (req: any, res: any) => {
   try {
+    const normalizedEmail = req.body.email.toLowerCase();
     const user = await prisma.registeredUser.findUnique({
       where: {
-        username: req.body.username,
+        email: normalizedEmail,
       },
     });
     if (user === null) {
@@ -96,7 +97,11 @@ app.post("/login", async (req: any, res: any) => {
           { userId: user.userId },
           process.env.ACCESS_TOKEN_SECRET
         );
-        res.status(200).json({ accessToken: accessToken });
+        res.status(200).json({
+          accessToken: accessToken,
+          username: user.username,
+          highScore: user.highScore,
+        });
       } else {
         res.status(401).send("Invalid User.");
       }
