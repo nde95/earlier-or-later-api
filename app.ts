@@ -95,7 +95,8 @@ app.post("/login", async (req: any, res: any) => {
       if (passwordMatch) {
         const accessToken = jwt.sign(
           { userId: user.userId },
-          process.env.ACCESS_TOKEN_SECRET
+          process.env.ACCESS_TOKEN_SECRET,
+          { expiresIn: "30m" }
         );
         res.status(200).json({
           accessToken: accessToken,
@@ -133,7 +134,7 @@ app.patch("/updatehighscore", authenticateToken, async (req: any, res: any) => {
         highScore: req.body.highScore,
       },
     });
-    res.status(200).send("High score updated successfully.");
+    res.status(200).json(res.user.highScore);
   } catch (error) {
     console.error("Error updating high score:", error);
     res.status(500).send("Internal Server Error");
