@@ -56,16 +56,22 @@ app.get("/getrandomphotos", async (req: any, res: any) => {
 app.post("/register", async (req: any, res: any) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const normalizedEmail = req.body.email.toLowerCase();
+    const normalizedUsername = req.body.username.toLowerCase();
+
     await prisma.registeredUser.create({
       data: {
-        username: req.body.username,
-        email: req.body.email,
+        username: normalizedUsername,
+        email: normalizedEmail,
         hashedPassword: hashedPassword,
         highScore: req.body.highScore || 0,
       },
     });
     return res.status(201).send("User registered successfully.");
-  } catch (error) {
+  } catch (error: any) {
+    if (error.code === "P2002") {
+      return res.status(409).send("Username or email already exists.");
+    }
     console.error("Error registering user:", error);
     return res.status(500).send("Internal Server Error");
   }
