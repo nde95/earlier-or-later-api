@@ -12,7 +12,7 @@ datasource db {
 
 model Image {
   imageId String @id @map("_id")
-  userId String @unique
+  userId String
   takenDate DateTime 
   username String
   realName String?
