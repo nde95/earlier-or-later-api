@@ -59,7 +59,7 @@ app.post("/register", async (req: any, res: any) => {
     const normalizedEmail = req.body.email.toLowerCase();
     const normalizedUsername = req.body.username.toLowerCase();
 
-    await prisma.registeredUser.create({
+    const createdUser = await prisma.registeredUser.create({
       data: {
         username: normalizedUsername,
         email: normalizedEmail,
@@ -67,7 +67,19 @@ app.post("/register", async (req: any, res: any) => {
         highScore: req.body.highScore || 0,
       },
     });
-    return res.status(201).send("User registered successfully.");
+
+    const accessToken = jwt.sign(
+      { userId: createdUser.userId },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "30m" }
+    );
+
+    return res.status(201).json({
+      message: "User created successfully.",
+      accessToken: accessToken,
+      username: createdUser.username,
+      highScore: createdUser.highScore,
+    });
   } catch (error: any) {
     if (error.code === "P2002") {
       return res.status(409).send("Username or email already exists.");
