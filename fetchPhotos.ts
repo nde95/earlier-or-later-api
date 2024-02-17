@@ -14,13 +14,12 @@ export async function fetchAndStorePhotos(): Promise<void> {
         params: {
           method: "flickr.groups.pools.getPhotos",
           api_key: process.env.FLICKR_KEY,
-          group_id: "571091@N20",
+          group_id: "950727@N20",
           tags: "",
-          max_taken_date: "1990-12-31",
           format: "json",
           nojsoncallback: 1,
           page: 1,
-          per_page: 15,
+          per_page: 30,
         },
       }
     );

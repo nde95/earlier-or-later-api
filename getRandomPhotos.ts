@@ -29,10 +29,6 @@ export async function getRandomPhotos() {
       .aggregate([{ $sample: { size: 20 } }])
       .toArray();
 
-    randomImages.forEach((image: any) => {
-      count++;
-      console.log(`Image ${count}: ${image.title}`);
-    });
     return randomImages;
   } catch (error) {
     console.error("Error fetching photos:", error);

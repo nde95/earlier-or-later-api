@@ -9,7 +9,7 @@ Welcome to the Node/Express TypeScript API for "Earlier or Later"! This API is d
 ## Features
 
 - User authentication: Allows users to sign up, log in, and manage their profiles.
-- Game management: Handles game sessions, questions, and user scores.
+- Game management: Handles game sessions, images, and user scores.
 - RESTful endpoints: Provides endpoints for interacting with user accounts and game data.
 - TypeScript support: Written in TypeScript for enhanced type safety and developer experience.
 - Express framework: Utilizes Express for routing and handling HTTP requests.
