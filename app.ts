@@ -136,17 +136,19 @@ function authenticateToken(req: any, res: any, next: any) {
   });
 }
 
-app.patch("/updatehighscore", authenticateToken, async (req: any, res: any) => {
+// readd authenticateToken middleware
+
+app.patch("/updatehighscore", async (req: any, res: any) => {
   try {
-    await prisma.registeredUser.update({
+    const updatedUser = await prisma.registeredUser.update({
       where: {
-        userId: req.user.userId,
+        username: req.body.username,
       },
       data: {
         highScore: req.body.highScore,
       },
     });
-    res.status(200).json(res.user.highScore);
+    res.status(200).json({ highScore: updatedUser.highScore });
   } catch (error) {
     console.error("Error updating high score:", error);
     res.status(500).send("Internal Server Error");
