@@ -155,6 +155,26 @@ app.patch("/updatehighscore", async (req: any, res: any) => {
   }
 });
 
+app.get("/leaderboard", async (req: any, res: any) => {
+  try {
+    const leaderboard = await prisma.registeredUser.findMany({
+      select: {
+        username: true,
+        highScore: true,
+      },
+      orderBy: {
+        highScore: "desc",
+      },
+      take: 5,
+    });
+    console.log("Leaderboard fetched successfully.");
+    res.status(200).send(leaderboard);
+  } catch (error) {
+    console.error("Error fetching leaderboard:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 app.listen(port, () => {
   console.log(`server is listening on port: ${port}`);
 });
