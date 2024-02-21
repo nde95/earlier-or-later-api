@@ -45,7 +45,7 @@ app.get("/getphotos", async (req: any, res: any) => {
 app.get("/getrandomphotos", async (req: any, res: any) => {
   try {
     await getRandomPhotos().then(photos => {
-      res.send(photos);
+      res.status(200).send(photos);
     });
   } catch (error) {
     console.error("Error fetching photos:", error);
