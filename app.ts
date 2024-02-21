@@ -19,15 +19,15 @@ app.get("/", (req: any, res: any) => {
   res.send("live and working");
 });
 
-app.get("/fetchphotos", async (req: any, res: any) => {
-  try {
-    await fetchAndStorePhotos();
-    res.send("Photos fetched and stored successfully.");
-  } catch (error) {
-    console.error("Error fetching and storing photos:", error);
-    res.status(500).send("Internal Server Error");
-  }
-});
+// app.get("/fetchphotos", async (req: any, res: any) => {
+//   try {
+//     await fetchAndStorePhotos();
+//     res.send("Photos fetched and stored successfully.");
+//   } catch (error) {
+//     console.error("Error fetching and storing photos:", error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 app.get("/getphotos", async (req: any, res: any) => {
   try {
