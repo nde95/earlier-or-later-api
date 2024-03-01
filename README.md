@@ -2,6 +2,10 @@
 
 Welcome to the Node/Express TypeScript API for "Earlier or Later"! This API is designed to provide backend functionality and support for the "Earlier or Later" React game.
 
+## This API is DEPRECIATED.
+
+Backend functionality has been replaced with my [Laravel](https://github.com/nde95/earlier-later-laravel) API.
+
 ## Overview
 
 "Earlier or Later" is a game where players guess whether a photo was taken earlier or later than another event. This API serves as the backend to manage user authentication, game data, and scores.
